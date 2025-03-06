@@ -16,6 +16,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+//doc string for the class and all test functions
+/**
+ * Test class for SortingFloatsController
+ */
 @WebMvcTest(SortingFloatsController.class)
 class SortingFloatsControllerTest {
 
@@ -25,6 +29,10 @@ class SortingFloatsControllerTest {
     @MockBean
     private ShellSortService shellSortService;
 
+    /**
+     * Test for sorting floats
+     * @throws Exception
+     */
     @Test
     void sortFloats() throws Exception {
         List<Float> input = Arrays.asList(3.2f, 1.5f, 4.8f);
@@ -38,6 +46,11 @@ class SortingFloatsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("[1.5, 3.2, 4.8]"));
     }
+
+    /**
+     * Test for sorting floats with empty list
+     * @throws Exception
+     */
 
     @Test
     void sortFloatsWithEmptyList() throws Exception {
@@ -53,6 +66,11 @@ class SortingFloatsControllerTest {
                 .andExpect(content().json("[]"));
     }
 
+    /**
+     * Test for sorting floats with single element
+     * @throws Exception
+     */
+
     @Test
     void sortFloatsWithSingleElement() throws Exception {
         List<Float> input = Arrays.asList(1.0f);
@@ -67,6 +85,10 @@ class SortingFloatsControllerTest {
                 .andExpect(content().json("[1.0]"));
     }
 
+    /**
+     * Test for sorting floats with duplicates
+     * @throws Exception
+     */    
     @Test
     void sortFloatsWithDuplicates() throws Exception {
         List<Float> input = Arrays.asList(3.3f, 1.1f, 2.2f, 3.3f, 1.1f);

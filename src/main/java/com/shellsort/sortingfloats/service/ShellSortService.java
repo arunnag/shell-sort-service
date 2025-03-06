@@ -8,6 +8,10 @@ import java.util.List;
 @Service
 public class ShellSortService {
     public List<Float> sort(List<Float> floats) {
+        return shellSort(floats);
+    }
+    
+    List<Float> shellSort(List<Float> floats) {
         int n = floats.size();
         for (int gap = n / 2; gap > 0; gap /= 2) {
             for (int i = gap; i < n; i += 1) {

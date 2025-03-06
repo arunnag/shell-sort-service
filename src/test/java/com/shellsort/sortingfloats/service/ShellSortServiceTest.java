@@ -6,11 +6,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Test class for ShellSortService
+ */
 class ShellSortServiceTest {
 
     private final ShellSortService shellSortService = new ShellSortService();
 
+    /**
+     * Test for sorting floats
+     */
     @Test
     void testSortWithUnsortedList() {
         List<Float> unsortedList = Arrays.asList(3.4f, 1.2f, 5.6f, 2.3f, 4.5f);
@@ -19,6 +24,10 @@ class ShellSortServiceTest {
         assertEquals(expectedList, sortedList);
     }
 
+    /**
+     * Test for sorting floats with sorted list
+     */
+
     @Test
     void testSortWithSortedList() {
         List<Float> sortedList = Arrays.asList(1.1f, 2.2f, 3.3f, 4.4f, 5.5f);
@@ -26,6 +35,9 @@ class ShellSortServiceTest {
         assertEquals(sortedList, result);
     }
 
+    /**
+     * Test for sorting floats with empty list
+     */
     @Test
     void testSortWithEmptyList() {
         List<Float> emptyList = Arrays.asList();
@@ -33,6 +45,9 @@ class ShellSortServiceTest {
         assertEquals(emptyList, result);
     }
 
+    /**
+     * Test for sorting floats with single element list
+     */
     @Test
     void testSortWithSingleElementList() {
         List<Float> singleElementList = Arrays.asList(1.0f);
@@ -40,6 +55,9 @@ class ShellSortServiceTest {
         assertEquals(singleElementList, result);
     }
 
+    /**
+     * Test for sorting floats with duplicates
+     */
     @Test
     void testSortWithDuplicates() {
         List<Float> listWithDuplicates = Arrays.asList(3.3f, 1.1f, 2.2f, 3.3f, 1.1f);
