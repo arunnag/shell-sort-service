@@ -27,34 +27,34 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- 7) Spring Boot Starter Validation -->
+		<!-- 2) Spring Boot Starter Validation -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
-		<!-- 8) Lombok -->
+		<!-- 3) Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
 
-		<!-- 9) SpringDoc OpenAPI for Swagger -->
+		<!-- 4) SpringDoc OpenAPI for Swagger -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc.version}</version>
 		</dependency>
 
-		<!-- 10) Jackson Databind for JSON serialization/deserialization -->
+		<!-- 5) Jackson Databind for JSON serialization/deserialization -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
 		<!-- ====================== TEST DEPENDENCIES ========================= -->
-		<!-- 11) Spring Boot Starter Test (Junit, etc.) -->
+		<!-- 6) Spring Boot Starter Test (Junit, etc.) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -67,7 +67,7 @@
 			</exclusions>
 		</dependency>
 
-		<!-- 12) Mockito Core and Mockito JUnit Jupiter -->
+		<!-- 7) Mockito Core and Mockito JUnit Jupiter -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
@@ -81,6 +81,7 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- 8) Springdoc -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
@@ -184,6 +185,8 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<!-- check style plugin for doc string voilations -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
