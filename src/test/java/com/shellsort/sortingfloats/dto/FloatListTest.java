@@ -1,5 +1,6 @@
 package com.shellsort.sortingfloats.dto;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -16,6 +18,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 class FloatListTest {
     
+    /**
+     * Test for if two FloatsList with the same floats are equal
+     */
+    @Test
+    void testEqualsListByHashCode() {
+        ArrayList<Float> floats = new ArrayList<>(Arrays.asList(1.1f, 2.2f, 3.3f));
+        FloatList floatList1 = new FloatList(floats);
+        FloatList floatList2 = new FloatList(floats);
+        assertTrue(floatList1.hashCode() == floatList2.hashCode());
+
+        ArrayList<Float> floats2 = new ArrayList<>(Arrays.asList(1f, 2f, 3f));
+        FloatList floatList3 = new FloatList(floats2);
+        assertTrue(floatList1.hashCode() != floatList3.hashCode());
+    }
+
+
+
     /**
      * Test for no argument constructor
      */
@@ -26,11 +45,33 @@ class FloatListTest {
     }
 
     /**
+     * Test for toString method
+     */
+    @Test
+    void testToString() {
+        ArrayList<Float> floats = new ArrayList<>(Arrays.asList(1.1f, 2.2f, 3.3f));
+        FloatList floatList = new FloatList(floats);
+        assertEquals("FloatList(floats=[1.1, 2.2, 3.3])", floatList.toString());
+    }
+
+    /**
+     * Test for equals method
+     */
+    @Test
+    void testEquals() {
+        ArrayList<Float> floats = new ArrayList<>(Arrays.asList(1.1f, 2.2f, 3.3f));
+        FloatList floatList1 = new FloatList(floats);
+        FloatList floatList2 = new FloatList(floats);
+        assertTrue(floatList1.equals(floatList2));
+    }
+
+
+    /**
      * Test for all argument constructor
      */
     @Test
     void testAllArgsConstructor() {
-        List<Float> floats = Arrays.asList(1.1f, 2.2f, 3.3f);
+        ArrayList<Float> floats = new ArrayList<>(Arrays.asList(1.1f, 2.2f, 3.3f));
         FloatList floatList = new FloatList(floats);
         assertEquals(floats, floatList.getFloats());
     }
@@ -41,7 +82,7 @@ class FloatListTest {
     @Test
     void testSetFloats() {
         FloatList floatList = new FloatList();
-        List<Float> floats = Arrays.asList(4.4f, 5.5f, 6.6f);
+        ArrayList<Float> floats = new ArrayList<>(Arrays.asList(4.4f, 5.5f, 6.6f));
         floatList.setFloats(floats);
         assertEquals(floats, floatList.getFloats());
     }
@@ -51,7 +92,7 @@ class FloatListTest {
      */
     @Test
     void testGetFloats() {
-        List<Float> floats = Arrays.asList(7.7f, 8.8f, 9.9f);
+        ArrayList<Float> floats = new ArrayList<>(Arrays.asList(7.7f, 8.8f, 9.9f));
         FloatList floatList = new FloatList(floats);
         assertEquals(floats, floatList.getFloats());
     }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.validation.constraints.NotNull;
 
@@ -20,11 +20,10 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class FloatList {
     /**
      * List of floats
      */
     @NotNull
-    private List<Float> floats;
+    private ArrayList<Float> floats;
 }

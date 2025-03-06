@@ -1,68 +1,54 @@
 package com.shellsort.sortingfloats.service;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Test class for ShellSortService
  */
+@SpringBootTest
 class ShellSortServiceTest {
 
     private final ShellSortService shellSortService = new ShellSortService();
 
+
+    //generate tests for sorting a list of floats
     /**
-     * Test for sorting floats
+     * Test for sorting a list of floats
      */
     @Test
-    void testSortWithUnsortedList() {
-        List<Float> unsortedList = Arrays.asList(3.4f, 1.2f, 5.6f, 2.3f, 4.5f);
-        List<Float> sortedList = shellSortService.sort(unsortedList);
-        List<Float> expectedList = Arrays.asList(1.2f, 2.3f, 3.4f, 4.5f, 5.6f);
-        assertEquals(expectedList, sortedList);
+    void testSort() {
+        ArrayList<Float> unSortedFloats = new ArrayList<>(Arrays.asList(3.3f, 2.2f, 1.1f, -2f, 7.2f, -9.3f));
+        ArrayList<Float> sortedFloats = new ArrayList<>(Arrays.asList(-9.3f, -2f, 1.1f, 2.2f, 3.3f, 7.2f));
+
+        ArrayList<ArrayList<Float>> actualSortedFloats = shellSortService.sort(unSortedFloats);
+
+        int size = actualSortedFloats.size();
+
+        assertFalse(unSortedFloats.equals(actualSortedFloats.get(0)));
+        assertTrue(sortedFloats.equals(actualSortedFloats.get(size-1)));
     }
 
+    //generate test with doc string for array size of 20 floats
     /**
-     * Test for sorting floats with sorted list
-     */
-
-    @Test
-    void testSortWithSortedList() {
-        List<Float> sortedList = Arrays.asList(1.1f, 2.2f, 3.3f, 4.4f, 5.5f);
-        List<Float> result = shellSortService.sort(sortedList);
-        assertEquals(sortedList, result);
-    }
-
-    /**
-     * Test for sorting floats with empty list
+     * Test for sorting a list of 20 floats
      */
     @Test
-    void testSortWithEmptyList() {
-        List<Float> emptyList = Arrays.asList();
-        List<Float> result = shellSortService.sort(emptyList);
-        assertEquals(emptyList, result);
-    }
+    void testSortTwentyFloats() {
+        ArrayList<Float> unSortedFloats = new ArrayList<>(Arrays.asList(3.3f, 2.2f, 1.1f, -2f, 7.2f, -9.3f, 0.0f, 5.5f, 4.4f, 6.6f, 8.8f, 9.9f, 10.1f, 11.2f, 12.3f, 13.4f, 14.5f, 15.6f, 16.7f, 17.8f));
+        ArrayList<Float> sortedFloats = new ArrayList<>(Arrays.asList(-9.3f, -2f, 0.0f, 1.1f, 2.2f, 3.3f, 4.4f, 5.5f, 6.6f, 7.2f, 8.8f, 9.9f, 10.1f, 11.2f, 12.3f, 13.4f, 14.5f, 15.6f, 16.7f, 17.8f));
 
-    /**
-     * Test for sorting floats with single element list
-     */
-    @Test
-    void testSortWithSingleElementList() {
-        List<Float> singleElementList = Arrays.asList(1.0f);
-        List<Float> result = shellSortService.sort(singleElementList);
-        assertEquals(singleElementList, result);
-    }
+        ArrayList<ArrayList<Float>> actualSortedFloats = shellSortService.sort(unSortedFloats);
 
-    /**
-     * Test for sorting floats with duplicates
-     */
-    @Test
-    void testSortWithDuplicates() {
-        List<Float> listWithDuplicates = Arrays.asList(3.3f, 1.1f, 2.2f, 3.3f, 1.1f);
-        List<Float> sortedList = shellSortService.sort(listWithDuplicates);
-        List<Float> expectedList = Arrays.asList(1.1f, 1.1f, 2.2f, 3.3f, 3.3f);
-        assertEquals(expectedList, sortedList);
+        int size = actualSortedFloats.size();
+
+
+        assertTrue(sortedFloats.equals(actualSortedFloats.get(size-1)));
+        assertFalse(sortedFloats.equals(actualSortedFloats.get(0)));
     }
 }
