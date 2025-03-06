@@ -5,9 +5,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shellsort.sortingfloats.dto.FloatList;
 import com.shellsort.sortingfloats.service.ShellSortService;
 
+
 import java.util.List;
+
+import javax.validation.Valid;
+
 
 /**
  * Controller class for sorting floats
@@ -26,9 +31,10 @@ public class SortingFloatsController {
      * @param floats list of floats to be sorted
      * @return sorted list of floats
      */
-     
+    
+
     @PostMapping("/sort")
-    public List<Float> sortFloats(@RequestBody List<Float> floats) {
-        return shellSortService.sort(floats);
+    public List<Float> sortFloats(@Valid @RequestBody FloatList floats) {
+        return shellSortService.sort(floats.getFloats());
     }
 }
