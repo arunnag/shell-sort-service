@@ -17,7 +17,6 @@ class ShellSortServiceTest {
     private final ShellSortService shellSortService = new ShellSortService();
 
 
-    //generate tests for sorting a list of floats
     /**
      * Test for sorting a list of floats
      */
@@ -34,7 +33,6 @@ class ShellSortServiceTest {
         assertTrue(sortedFloats.equals(actualSortedFloats.get(size-1)));
     }
 
-    //generate test with doc string for array size of 20 floats
     /**
      * Test for sorting a list of 20 floats
      */
@@ -46,7 +44,6 @@ class ShellSortServiceTest {
         ArrayList<ArrayList<Float>> actualSortedFloats = shellSortService.sort(unSortedFloats);
 
         int size = actualSortedFloats.size();
-
 
         assertTrue(sortedFloats.equals(actualSortedFloats.get(size-1)));
         assertFalse(sortedFloats.equals(actualSortedFloats.get(0)));

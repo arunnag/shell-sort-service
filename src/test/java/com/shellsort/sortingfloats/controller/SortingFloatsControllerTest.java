@@ -1,6 +1,5 @@
 package com.shellsort.sortingfloats.controller;
 
-import com.shellsort.sortingfloats.dto.FloatList;
 import com.shellsort.sortingfloats.service.ShellSortService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +10,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//doc string for the class and all test functions
 /**
  * Test class for SortingFloatsController
  */
@@ -32,7 +28,6 @@ class SortingFloatsControllerTest {
     private ShellSortService shellSortService;
 
     
-    // generate test for list of string should return bad request with docstring
     /**
      * Test for sorting a list of strings
      * @throws Exception if an error occurs during the request
@@ -54,7 +49,6 @@ class SortingFloatsControllerTest {
     }
 
 
-    //geneate passing test for sorting a list of ten floats with docstring
     /**
      * Test for sorting a list of ten floats
      * @throws Exception if an error occurs during the request
@@ -67,9 +61,6 @@ class SortingFloatsControllerTest {
         ArrayList<ArrayList<Float>> actualSortedFloats = new ArrayList<>(Arrays.asList(unsortedFloats, sortedFloats));
 
         when(shellSortService.sort(unsortedFloats)).thenReturn(actualSortedFloats);
-
-        FloatList floatList = new FloatList();
-        floatList.setFloats(unsortedFloats);
 
         String inputJson = "{\"floats\":[9.4, 3.2, 5.6, 1.1, 7.8]}";
         String outputJson = "[[9.4, 3.2, 5.6, 1.1, 7.8],[1.1, 3.2, 5.6, 7.8, 9.4]]";

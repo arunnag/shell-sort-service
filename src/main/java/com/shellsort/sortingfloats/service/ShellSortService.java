@@ -3,8 +3,6 @@ package com.shellsort.sortingfloats.service;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 /**
@@ -40,11 +38,6 @@ public class ShellSortService {
             result.add((ArrayList<Float>) floats.clone());
         }
 
-        System.out.println("Reached here!!!");
-        for (int i = 0; i < result.size(); i++) {
-            System.out.println(result.get(i));
-        }
-        System.out.println("Done!!!");
         return result;
     }
 }
