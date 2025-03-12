@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 /**
  * DTO class for list of floats
  */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

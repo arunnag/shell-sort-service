@@ -4,7 +4,25 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Main class for the application
+ * The SortingfloatsApplication class serves as the entry point for the Spring Boot application.
+ * It contains the main method which launches the application.
+ * 
+ * <p>This application is designed to demonstrate sorting algorithms for floating-point numbers.</p>
+ * 
+ * <p>Usage:</p>
+ * <pre>
+ * {@code
+ * java -jar sortingfloats.jar
+ * }
+ * </pre>
+ * 
+ * <p>Dependencies:</p>
+ * <ul>
+ *   <li>Spring Boot</li>
+ * </ul>
+ * 
+ * @see org.springframework.boot.SpringApplication
+ * @see org.springframework.boot.autoconfigure.SpringBootApplication
  */
 @SpringBootApplication
 public class SortingfloatsApplication {
