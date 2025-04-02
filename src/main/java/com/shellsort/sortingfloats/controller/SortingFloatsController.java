@@ -1,6 +1,7 @@
 package com.shellsort.sortingfloats.controller;
 
 import com.shellsort.sortingfloats.service.ShellSortService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class SortingFloatsController {
    */
   @PostMapping("/sort")
   public ResponseEntity<ArrayList<ArrayList<Double>>> sortFloats(
-      @NotEmpty @NotNull @RequestBody ArrayList<Double> floats) {
+      @Valid @RequestBody @NotEmpty @NotNull ArrayList<Double> floats) {
 
     logger.info("Received request to sort floats: {}", floats);
     ArrayList<ArrayList<Double>> arrayAfterEachIteration = shellSortService.sort(floats);

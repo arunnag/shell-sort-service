@@ -69,10 +69,13 @@ public class ShellSortService {
     int n = floats.size();
     ArrayList<ArrayList<Double>> result = new ArrayList<ArrayList<Double>>();
 
+    // Start with a big gap, then reduce the gap
     for (int gap = n / 2; gap > 0; gap /= 2) {
       for (int i = gap; i < n; i += 1) {
         Double temp = floats.get(i);
         int j;
+
+        // Shift earlier gap-sorted elements up until the correct location for floats[i] is found
         for (j = i; j >= gap && floats.get(j - gap) > temp; j -= gap) {
           floats.set(j, floats.get(j - gap));
         }

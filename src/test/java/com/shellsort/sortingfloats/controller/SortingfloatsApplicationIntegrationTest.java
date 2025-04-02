@@ -2,34 +2,22 @@ package com.shellsort.sortingfloats.controller;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SortingfloatsApplicationIntegrationTest {
 
   @Autowired private TestRestTemplate restTemplate;
 
-  boolean arraysEqual(ArrayList<Float> arr1, ArrayList<Float> arr2) {
-    System.out.println("arr1: " + arr1);
-    System.out.println("arr2: " + arr2);
-    if (arr1.size() != arr2.size()) {
-      return false;
-    }
-    for (int i = 0; i < arr1.size(); i++) {
-      if (!arr1.get(i).equals(arr2.get(i))) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  @org.junit.jupiter.api.Test
+  @Test
   public void testSortingEndpoint() {
     // Arrange
     String url = "/api/v1/sort";
@@ -45,11 +33,21 @@ public class SortingfloatsApplicationIntegrationTest {
     ArrayList<ArrayList<Double>> allSortingStages = response.getBody();
     int resSz = allSortingStages.size();
 
-    System.out.println("allSortingStages: " + allSortingStages);
-
     ArrayList<Double> sortedArray = allSortingStages.get(resSz - 1);
     assertArrayEquals(expectedArray, sortedArray.toArray());
+  }
 
-    // assertTrue(arraysEqual(expectedArray, sortedArray));
+  @Test
+  public void testStringArrayThrowsBadRequest() {
+    // Arrange
+    String url = "/api/v1/sort";
+    ArrayList<String> inputArray = new ArrayList<>(Arrays.asList("a", "b", "c"));
+
+    // Act
+    ResponseEntity<String> response = restTemplate.postForEntity(url, inputArray, String.class);
+
+    // Assert
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertTrue(response.getBody().contains("Malformed Request body"));
   }
 }
