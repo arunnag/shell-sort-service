@@ -15,8 +15,13 @@ class SortingfloatsApplicationTest {
     assertTrue(true);
   }
 
+  /**
+   * Tests the main method of the SortingfloatsApplication class. This test ensures that the
+   * application starts up without any issues.
+   */
   @Test
   void main() {
     SortingfloatsApplication.main(new String[] {});
+    assertTrue(true);
   }
 }

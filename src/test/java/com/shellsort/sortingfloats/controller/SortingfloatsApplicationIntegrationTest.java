@@ -12,11 +12,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 
+/*
+ * Integration test for the SortingfloatsApplication
+ * This test class is used to test the REST API endpoints of the application.
+ * It uses the TestRestTemplate to send HTTP requests and verify the responses.
+ * The test cases cover the sorting functionality and error handling for invalid input.
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SortingfloatsApplicationIntegrationTest {
 
   @Autowired private TestRestTemplate restTemplate;
 
+  // Test sorting few floating point numbers and check if the response is sorted and returns success
+  // status
   @Test
   public void testSortingEndpoint() {
     // Arrange
@@ -37,6 +45,7 @@ public class SortingfloatsApplicationIntegrationTest {
     assertArrayEquals(expectedArray, sortedArray.toArray());
   }
 
+  // Test sorting with non floating point array to see if the response is bad request
   @Test
   public void testStringArrayThrowsBadRequest() {
     // Arrange

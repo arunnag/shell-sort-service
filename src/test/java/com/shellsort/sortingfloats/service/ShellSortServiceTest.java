@@ -14,6 +14,7 @@ class ShellSortServiceTest {
 
   private final ShellSortService shellSortService = new ShellSortService();
 
+  /** Tests the sorting functionality of the ShellSortService with a single-element list. */
   @Test
   void testSortSingleElement() {
     ArrayList<Double> unSortedFloats = new ArrayList<>(Arrays.asList(3.3));
@@ -27,7 +28,10 @@ class ShellSortServiceTest {
     assertTrue(sortedFloats.equals(actualSortedFloats.get(size - 1)));
   }
 
-  /** Test for sorting a list of floats */
+  /**
+   * Tests the sorting functionality of the ShellSortService with a list of floats including positve
+   * and negative numbers.
+   */
   @Test
   void testSort() {
     ArrayList<Double> unSortedFloats =
@@ -42,19 +46,19 @@ class ShellSortServiceTest {
     assertTrue(sortedFloats.equals(actualSortedFloats.get(size - 1)));
   }
 
-  /** Test for sorting a list of 20 floats */
+  /*
+   * Tests the sorting functionality of the ShellSortService with a list of ten thousand floats.
+   */
   @Test
-  void testSortTwentyFloats() {
-    ArrayList<Double> unSortedFloats =
-        new ArrayList<>(
-            Arrays.asList(
-                3.3, 2.2, 1.1, -2.0, 7.2, -9.3, 0.0, 5.5, 4.4, 6.6, 8.8, 9.9, 10.1, 11.2, 12.3,
-                13.4, 14.5, 15.6, 16.7, 17.8));
-    ArrayList<Double> sortedFloats =
-        new ArrayList<>(
-            Arrays.asList(
-                -9.3, -2.0, 0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.2, 8.8, 9.9, 10.1, 11.2, 12.3,
-                13.4, 14.5, 15.6, 16.7, 17.8));
+  void testSortTenThousandFloats() {
+    ArrayList<Double> unSortedFloats = new ArrayList<>();
+    ArrayList<Double> sortedFloats = new ArrayList<>();
+
+    for (int i = 5000; i > -5000; i--) {
+      unSortedFloats.add((double) i);
+      sortedFloats.add((double) i);
+    }
+    sortedFloats.sort(Double::compareTo);
 
     ArrayList<ArrayList<Double>> actualSortedFloats = shellSortService.sort(unSortedFloats);
 
