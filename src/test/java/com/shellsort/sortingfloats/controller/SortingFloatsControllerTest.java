@@ -45,6 +45,7 @@ class SortingFloatsControllerTest {
     ArrayList<ArrayList<Double>> actualSortedFloats =
         new ArrayList<>(Arrays.asList(unsortedFloats, sortedFloats));
 
+    // mock the shellSortService to return the expected sorted floats
     when(shellSortService.sort(unsortedFloats)).thenReturn(actualSortedFloats);
 
     String inputJson = "[9.4, 3.2, 5.6, 1.1, 7.8]";
@@ -64,6 +65,7 @@ class SortingFloatsControllerTest {
    */
   @Test
   void testEmptyBody() throws Exception {
+    // for empty input the controller should return a 400 Bad Request status
     mockMvc
         .perform(post("/api/v1/sort").contentType(MediaType.APPLICATION_JSON).content("[]"))
         .andExpect(status().isBadRequest());
@@ -76,29 +78,32 @@ class SortingFloatsControllerTest {
    */
   @Test
   void testNullBody() throws Exception {
+    // for null input the controller should return a 400 Bad Request status
     mockMvc
         .perform(post("/api/v1/sort").contentType(MediaType.APPLICATION_JSON).content("null"))
         .andExpect(status().isBadRequest());
   }
 
   /**
-   * Test for sorting a list with negative floats
+   * Test for sorting a list with postive and negative floats
    *
    * @throws Exception if an error occurs during the request
    */
   @Test
-  void testSortNegativeFloats() throws Exception {
+  void testSortMixOfloats() throws Exception {
     ArrayList<Double> unsortedFloats = new ArrayList<>(Arrays.asList(-9.4, 3.2, -5.6, 1.1, 7.8));
     ArrayList<Double> sortedFloats = new ArrayList<>(Arrays.asList(-9.4, -5.6, 1.1, 3.2, 7.8));
 
     ArrayList<ArrayList<Double>> actualSortedFloats =
         new ArrayList<>(Arrays.asList(unsortedFloats, sortedFloats));
 
+    //
     when(shellSortService.sort(unsortedFloats)).thenReturn(actualSortedFloats);
 
     String inputJson = "[-9.4, 3.2, -5.6, 1.1, 7.8]";
     String outputJson = "[[-9.4, 3.2, -5.6, 1.1, 7.8],[-9.4, -5.6, 1.1, 3.2, 7.8]]";
 
+    // generate the mock mvc request and check the response
     mockMvc
         .perform(post("/api/v1/sort").contentType(MediaType.APPLICATION_JSON).content(inputJson))
         .andExpect(status().isOk())

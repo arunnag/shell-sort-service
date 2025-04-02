@@ -54,9 +54,11 @@ class ShellSortServiceTest {
     ArrayList<Double> unSortedFloats = new ArrayList<>();
     ArrayList<Double> sortedFloats = new ArrayList<>();
 
+    // Generate 10,000 random floats between -1000 and 1000
     for (int i = 5000; i > -5000; i--) {
-      unSortedFloats.add((double) i);
-      sortedFloats.add((double) i);
+      double randomFloat = -1000 + Math.random() * 2000;
+      unSortedFloats.add(randomFloat);
+      sortedFloats.add(randomFloat);
     }
     sortedFloats.sort(Double::compareTo);
 
@@ -64,7 +66,9 @@ class ShellSortServiceTest {
 
     int size = actualSortedFloats.size();
 
+    // there should more than 12 iterations for 10,000 elements
+    assertTrue(size > 12);
+    // Check if the last element is the same as the sorted list
     assertTrue(sortedFloats.equals(actualSortedFloats.get(size - 1)));
-    assertFalse(sortedFloats.equals(actualSortedFloats.get(0)));
   }
 }
