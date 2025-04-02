@@ -1,75 +1,107 @@
 package com.shellsort.sortingfloats.controller;
 
-import com.shellsort.sortingfloats.service.ShellSortService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Test class for SortingFloatsController
- */
-@WebMvcTest(SortingFloatsController.class)
+import com.shellsort.sortingfloats.service.ShellSortService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+/** Test class for SortingFloatsController */
 class SortingFloatsControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+  private MockMvc mockMvc;
 
-    @MockBean
-    private ShellSortService shellSortService;
+  @Mock private ShellSortService shellSortService;
 
-    
-    /**
-     * Test for sorting a list of strings
-     * @throws Exception if an error occurs during the request
-     */
-    @Test
-    void testSortStringList() throws Exception {
+  @InjectMocks private SortingFloatsController sortingFloatsController;
 
-        ArrayList<Float> unsortedFloats = new ArrayList<>(Arrays.asList(9.4f, 3.2f, 5.6f, 1.1f, 7.8f));
-        ArrayList<Float> sortedFloats = new ArrayList<>(Arrays.asList(1.1f, 3.2f, 5.6f, 7.8f, 9.4f));
+  @BeforeEach
+  public void setUp() {
+    MockitoAnnotations.openMocks(this);
+    mockMvc = MockMvcBuilders.standaloneSetup(sortingFloatsController).build();
+  }
 
-        ArrayList<ArrayList<Float>> actualSortedFloats = new ArrayList<>(Arrays.asList(unsortedFloats, sortedFloats));
+  /**
+   * Test for sorting a list of ten floats
+   *
+   * @throws Exception if an error occurs during the request
+   */
+  @Test
+  void testSortFiveFloats() throws Exception {
+    ArrayList<Double> unsortedFloats = new ArrayList<>(Arrays.asList(9.4, 3.2, 5.6, 1.1, 7.8));
+    ArrayList<Double> sortedFloats = new ArrayList<>(Arrays.asList(1.1, 3.2, 5.6, 7.8, 9.4));
 
-        when(shellSortService.sort(unsortedFloats)).thenReturn(actualSortedFloats);        
+    ArrayList<ArrayList<Double>> actualSortedFloats =
+        new ArrayList<>(Arrays.asList(unsortedFloats, sortedFloats));
 
-        mockMvc.perform(post("/sort")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"floats\":[\"this\", \"is\", \"a\",\"string\",\"list\"]}"))
-                .andExpect(status().isBadRequest());
-    }
+    when(shellSortService.sort(unsortedFloats)).thenReturn(actualSortedFloats);
 
+    String inputJson = "[9.4, 3.2, 5.6, 1.1, 7.8]";
+    String outputJson = "[[9.4, 3.2, 5.6, 1.1, 7.8],[1.1, 3.2, 5.6, 7.8, 9.4]]";
 
-    /**
-     * Test for sorting a list of ten floats
-     * @throws Exception if an error occurs during the request
-     */
-    @Test
-    void testSortFiveFloats() throws Exception {
-        ArrayList<Float> unsortedFloats = new ArrayList<>(Arrays.asList(9.4f, 3.2f, 5.6f, 1.1f, 7.8f));
-        ArrayList<Float> sortedFloats = new ArrayList<>(Arrays.asList(1.1f, 3.2f, 5.6f, 7.8f, 9.4f));
+    // generte the mock mvc request
+    mockMvc
+        .perform(post("/api/v1/sort").contentType(MediaType.APPLICATION_JSON).content(inputJson))
+        .andExpect(status().isOk())
+        .andExpect(content().json(outputJson));
+  }
 
-        ArrayList<ArrayList<Float>> actualSortedFloats = new ArrayList<>(Arrays.asList(unsortedFloats, sortedFloats));
+  /**
+   * Test for Empty body which should result in bad request
+   *
+   * @throws Exception if an error occurs during the request
+   */
+  @Test
+  void testEmptyBody() throws Exception {
+    mockMvc
+        .perform(post("/api/v1/sort").contentType(MediaType.APPLICATION_JSON).content("[]"))
+        .andExpect(status().isBadRequest());
+  }
 
-        when(shellSortService.sort(unsortedFloats)).thenReturn(actualSortedFloats);
+  /**
+   * Test for null body which should result in bad request
+   *
+   * @throws Exception if an error occurs during the request
+   */
+  @Test
+  void testNullBody() throws Exception {
+    mockMvc
+        .perform(post("/api/v1/sort").contentType(MediaType.APPLICATION_JSON).content("null"))
+        .andExpect(status().isBadRequest());
+  }
 
-        String inputJson = "{\"floats\":[9.4, 3.2, 5.6, 1.1, 7.8]}";
-        String outputJson = "[[9.4, 3.2, 5.6, 1.1, 7.8],[1.1, 3.2, 5.6, 7.8, 9.4]]";
+  /**
+   * Test for sorting a list with negative floats
+   *
+   * @throws Exception if an error occurs during the request
+   */
+  @Test
+  void testSortNegativeFloats() throws Exception {
+    ArrayList<Double> unsortedFloats = new ArrayList<>(Arrays.asList(-9.4, 3.2, -5.6, 1.1, 7.8));
+    ArrayList<Double> sortedFloats = new ArrayList<>(Arrays.asList(-9.4, -5.6, 1.1, 3.2, 7.8));
 
-        //generte the mock mvc request
-        mockMvc.perform(post("/sort")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(inputJson))
-            .andExpect(status().isOk())
-            .andExpect(content().json(outputJson));
-    }
+    ArrayList<ArrayList<Double>> actualSortedFloats =
+        new ArrayList<>(Arrays.asList(unsortedFloats, sortedFloats));
+
+    when(shellSortService.sort(unsortedFloats)).thenReturn(actualSortedFloats);
+
+    String inputJson = "[-9.4, 3.2, -5.6, 1.1, 7.8]";
+    String outputJson = "[[-9.4, 3.2, -5.6, 1.1, 7.8],[-9.4, -5.6, 1.1, 3.2, 7.8]]";
+
+    mockMvc
+        .perform(post("/api/v1/sort").contentType(MediaType.APPLICATION_JSON).content(inputJson))
+        .andExpect(status().isOk())
+        .andExpect(content().json(outputJson));
+  }
 }
