@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,20 +27,16 @@ public class SortingfloatsApplicationIntegrationTest {
   public void testSortingEndpoint() {
     // Arrange
     String url = "/api/v1/sort";
-    ArrayList<Double> inputArray = new ArrayList<>(java.util.Arrays.asList(5.4, 2.3, 9.8, 1.2));
+    Double[] inputArray = {5.4, 2.3, 9.8, 1.2};
     Double[] expectedArray = {1.2, 2.3, 5.4, 9.8};
     // Act
-    ResponseEntity<ArrayList> response =
-        restTemplate.postForEntity(url, inputArray, ArrayList.class);
+    ResponseEntity<Double[]> response = restTemplate.postForEntity(url, inputArray, Double[].class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
 
-    @SuppressWarnings("unchecked")
-    ArrayList<ArrayList<Double>> allSortingStages = response.getBody();
-    int resSz = allSortingStages.size();
+    Double[] actualSortedArray = response.getBody();
 
-    ArrayList<Double> sortedArray = allSortingStages.get(resSz - 1);
-    assertArrayEquals(expectedArray, sortedArray.toArray());
+    assertArrayEquals(expectedArray, actualSortedArray);
   }
 
   // Test sorting with non floating point array to see if the response is bad request
@@ -50,7 +44,7 @@ public class SortingfloatsApplicationIntegrationTest {
   public void testStringArrayThrowsBadRequest() {
     // Arrange
     String url = "/api/v1/sort";
-    ArrayList<String> inputArray = new ArrayList<>(Arrays.asList("a", "b", "c"));
+    String[] inputArray = {"a", "b", "c"};
 
     // Act
     ResponseEntity<String> response = restTemplate.postForEntity(url, inputArray, String.class);

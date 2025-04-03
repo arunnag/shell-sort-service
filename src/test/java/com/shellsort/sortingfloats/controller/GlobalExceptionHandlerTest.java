@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 public class GlobalExceptionHandlerTest {
 
-  private final GlobalExceptionHandler handler = new GlobalExceptionHandler();
+  // Instance of the GlobalExceptionHandler to be tested
+  private GlobalExceptionHandler handler;
+
+  @BeforeEach
+  void setUp() {
+    handler = new GlobalExceptionHandler();
+  }
 
   /*
    * Tests the {@code handleGenericException} method of the {@code GlobalExceptionHandler} class.

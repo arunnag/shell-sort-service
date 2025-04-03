@@ -1,9 +1,7 @@
 package com.shellsort.sortingfloats.service;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,36 +12,87 @@ class ShellSortServiceTest {
 
   private final ShellSortService shellSortService = new ShellSortService();
 
+  /** Tests the sorting functionality of the ShellSortService with an empty list. */
+  @Test
+  void testSortEmpty() {
+    Double[] unSortedFloats = {};
+    Double[] sortedFloats = {};
+
+    Double[] actualSortedFloats = shellSortService.shellSort(unSortedFloats);
+
+    assertArrayEquals(sortedFloats, actualSortedFloats);
+  }
+
+  /** Tests the sorting functionality of the ShellSortService with a null list. */
+  @Test
+  void testSortNull() {
+    Double[] unSortedFloats = null;
+    Double[] sortedFloats = null;
+
+    Double[] actualSortedFloats = shellSortService.shellSort(unSortedFloats);
+
+    assertArrayEquals(sortedFloats, actualSortedFloats);
+  }
+
   /** Tests the sorting functionality of the ShellSortService with a single-element list. */
   @Test
   void testSortSingleElement() {
-    ArrayList<Double> unSortedFloats = new ArrayList<>(Arrays.asList(3.3));
-    ArrayList<Double> sortedFloats = new ArrayList<>(Arrays.asList(3.3));
+    Double[] unSortedFloats = {3.3};
+    Double[] sortedFloats = {3.3};
 
-    ArrayList<ArrayList<Double>> actualSortedFloats = shellSortService.sort(unSortedFloats);
+    Double[] actualSortedFloats = shellSortService.shellSort(unSortedFloats);
 
-    int size = actualSortedFloats.size();
+    assertArrayEquals(sortedFloats, actualSortedFloats);
+  }
 
-    assertTrue(unSortedFloats.equals(actualSortedFloats.get(0)));
-    assertTrue(sortedFloats.equals(actualSortedFloats.get(size - 1)));
+  /** Tests the sorting functionality of the ShellSortService with an already sorted list. */
+  @Test
+  void testSortAlreadySorted() {
+    Double[] unSortedFloats = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9};
+    Double[] sortedFloats = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9};
+
+    Double[] actualSortedFloats = shellSortService.shellSort(unSortedFloats);
+
+    assertArrayEquals(sortedFloats, actualSortedFloats);
   }
 
   /**
    * Tests the sorting functionality of the ShellSortService with a list of floats including positve
-   * and negative numbers.
+   * and negative numbers and zeros
    */
   @Test
-  void testSort() {
-    ArrayList<Double> unSortedFloats =
-        new ArrayList<>(Arrays.asList(3.3, 2.2, 1.1, -2.0, 7.2, -9.3));
-    ArrayList<Double> sortedFloats = new ArrayList<>(Arrays.asList(-9.3, -2.0, 1.1, 2.2, 3.3, 7.2));
+  void testMixOfFloats() {
+    Double[] unSortedFloats = {3.3, 2.2, 1.1, -2.0, 7.2, 0.0, -9.3, 0.0, 0.1};
+    Double[] sortedFloats = {-9.3, -2.0, 0.0, 0.0, 0.1, 1.1, 2.2, 3.3, 7.2};
 
-    ArrayList<ArrayList<Double>> actualSortedFloats = shellSortService.sort(unSortedFloats);
+    Double[] actualSortedFloats = shellSortService.shellSort(unSortedFloats);
 
-    int size = actualSortedFloats.size();
+    assertArrayEquals(sortedFloats, actualSortedFloats);
+  }
 
-    assertFalse(unSortedFloats.equals(actualSortedFloats.get(0)));
-    assertTrue(sortedFloats.equals(actualSortedFloats.get(size - 1)));
+  /** Tests the sorting functionality of the ShellSortService with a reverse sorted list. */
+  @Test
+  void testSortReverseSorted() {
+    Double[] unSortedFloats = {9.9, 8.8, 7.7, 6.6, 5.5, 4.4, 3.3, 2.2, 1.1};
+    Double[] sortedFloats = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9};
+
+    Double[] actualSortedFloats = shellSortService.shellSort(unSortedFloats);
+
+    assertArrayEquals(sortedFloats, actualSortedFloats);
+  }
+
+  /**
+   * Tests the sorting functionality of the ShellSortService with a list containing duplicate
+   * values.
+   */
+  @Test
+  void testSortWithDuplicates() {
+    Double[] unSortedFloats = {3.3, 2.2, 3.3, 1.1, 2.2, 1.1};
+    Double[] sortedFloats = {1.1, 1.1, 2.2, 2.2, 3.3, 3.3};
+
+    Double[] actualSortedFloats = shellSortService.shellSort(unSortedFloats);
+
+    assertArrayEquals(sortedFloats, actualSortedFloats);
   }
 
   /*
@@ -51,24 +100,19 @@ class ShellSortServiceTest {
    */
   @Test
   void testSortTenThousandFloats() {
-    ArrayList<Double> unSortedFloats = new ArrayList<>();
-    ArrayList<Double> sortedFloats = new ArrayList<>();
+    Double[] unSortedFloats = new Double[10000];
+    Double[] sortedFloats = new Double[10000];
 
     // Generate 10,000 random floats between -1000 and 1000
-    for (int i = 5000; i > -5000; i--) {
+    for (int i = 0; i < 10000; i++) {
       double randomFloat = -1000 + Math.random() * 2000;
-      unSortedFloats.add(randomFloat);
-      sortedFloats.add(randomFloat);
+      unSortedFloats[i] = randomFloat;
+      sortedFloats[i] = randomFloat;
     }
-    sortedFloats.sort(Double::compareTo);
+    Arrays.sort(sortedFloats);
 
-    ArrayList<ArrayList<Double>> actualSortedFloats = shellSortService.sort(unSortedFloats);
+    Double[] actualSortedFloats = shellSortService.shellSort(unSortedFloats);
 
-    int size = actualSortedFloats.size();
-
-    // there should more than 12 iterations for 10,000 elements
-    assertTrue(size > 12);
-    // Check if the last element is the same as the sorted list
-    assertTrue(sortedFloats.equals(actualSortedFloats.get(size - 1)));
+    assertArrayEquals(sortedFloats, actualSortedFloats);
   }
 }
