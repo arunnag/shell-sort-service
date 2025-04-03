@@ -43,7 +43,11 @@ public class SortingfloatsController {
    */
   @PostMapping("/sort")
   public ResponseEntity<Double[]> sortFloats(
-      @Valid @RequestBody @NotNull @NotEmpty Double[] floats) {
+      @Valid
+          @RequestBody
+          @NotNull(message = "Input array must not be null")
+          @NotEmpty(message = "Input array must not be empty")
+          Double[] floats) {
     if (floats == null) {
       logger.error("Received null input for sorting.");
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
