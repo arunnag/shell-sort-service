@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>sortingfloats</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>radixsorting</name>
+	<name>sortingfloats</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
